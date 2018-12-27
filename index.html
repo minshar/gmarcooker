@@ -1,0 +1,120 @@
+<!doctype html>
+<html dir="rtl">
+  <head>
+    <title>מחולל בריף לפרויקט גמר</title>
+    <meta charset="utf-8">
+    <meta property="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Miriam+Libre:400,700&amp;subset=hebrew" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	  
+	<article>
+    
+	    <h1><span class="edit" contenteditable>כותרת הפרויקט</span></h1>
+	    
+		<section class="meta">
+			<div class="description">בריף לפרויקט גמר</div>
+			<div class="author">מאת <span class="edit" contenteditable>שם הסטודנטית</span></div>
+			<div class="guide">מנחה: <span class="edit" contenteditable>שם המנחה</span></div>
+			<div class="school">המחלקה לתקשורת חזותית, מנשר</div>
+		</section>
+		
+		<section class="subject">
+			<h2>נושא</h2>
+			<div class="domain"><span class="edit" contenteditable>דומיין - תחום התוכן</span></div>
+			<ul class="focus">
+				<li><span class="edit" contenteditable>מיקוד הנושא</span></li>
+			</div>
+		</section>
+
+		<section class="medium">
+			<h2>מדיום</h2>
+			<div class="channel">
+				<span class="edit" contenteditable>ערוץ - מסגרת התוכן</span>
+			</div>
+			<ul class="formats">
+				<li><span class="edit" contenteditable>פירוט על פורמט</span></li>
+			</ul>
+		</section>
+
+		<button class="print">הדפסה</button>
+	
+	</article>
+    
+    <script type="text/javascript">
+	    
+	    var editFunctions = editElement => {
+		    
+		    editElement.addEventListener( "focus", e => {
+		    
+			    if ( !('placeholder' in e.currentTarget.dataset) ) {
+				    e.currentTarget.dataset.placeholder = e.currentTarget.innerHTML;
+			    }
+			    
+			    var selection = window.getSelection();
+			    var range = document.createRange();
+			    range.selectNodeContents( e.currentTarget );
+			    selection.removeAllRanges();
+			    selection.addRange( range );
+			    e.currentTarget.className = "edit done";
+			    
+		    } );
+	    
+		    editElement.addEventListener( "blur", e => {
+			    
+			    if ( !e.currentTarget.innerHTML ) {
+				    e.currentTarget.innerHTML = e.currentTarget.dataset.placeholder;
+			    }
+			    
+			} );
+
+	    };
+	    
+	    document.querySelectorAll( "ul" ).forEach( listElement => {
+		    
+		    var listItemTemplate = listElement.querySelector( "li" ).cloneNode( true );
+		    
+		    var addButton = document.createElement( "BUTTON" );
+		    
+		    addButton.innerHTML = "הוסף";
+		    
+		    addButton.addEventListener( "click", e => {
+			    
+			    var newItem = listItemTemplate.cloneNode( true );
+			    
+			    var removeButton = document.createElement( "BUTTON" );
+			    
+			    removeButton.innerHTML = "הסר";
+			    
+			    removeButton.addEventListener( "click", e  => {
+				    
+				    newItem.remove();
+				    
+			    } );
+			    
+			    newItem.appendChild( removeButton );
+			    
+			    editFunctions( newItem.querySelector( ".edit" ) );
+			    
+			    listElement.appendChild( newItem );
+			    
+		    } );
+		    
+		    listElement.after( addButton );
+		    
+	    } );
+	    
+	    document.querySelector( "button.print" ).addEventListener( "click", e => {
+		    
+		    window.print();
+		    
+	    } );
+	    
+	    document.querySelectorAll( ".edit" ).forEach( editFunctions );
+	    
+	</script>
+
+  </body>
+</html>					        
