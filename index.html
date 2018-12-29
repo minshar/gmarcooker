@@ -15,36 +15,40 @@
 		<section class="application">
 			<span class="label">הפרויקט שלי יהיה</span>
 			<label>
-				<span class="label-text"></span>
 				<select>
 					<option>סיפור נראטיבי</option>
+					<option>סיפור אינטראקטיבי</option>
 					<option>כלי עזר</option>
 					<option>תדמית חזותית</option>
 					<option>קטלוג תערוכה</option>
+					<option>קמפיין</option>
+					<option>מניפסט חזותי</option>
 				</select>
+				<span class="label-text"></span>
 			</label>
 		</section>
 
 		<section class="technique">
 			<span class="label">בטכניקה</span>
 			<label>
-				<span class="label-text"></span>
 				<select>
 					<option>איורית</option>
 					<option>טיפוגרפית</option>
 					<option>אינפוגרפית</option>
-					<option>מבוססת קוד</option>
 					<option>ידנית בלבד</option>
+					<option>של שחור/לבן</option>
+					<option>מבוססת רדי-מייד</option>
+					<option>מבוססת קוד</option>
 				</select>
+				<span class="label-text"></span>
 			</label>
 		</section>
 
 		<section class="format">
 			<span class="label">בפורמט של</span>
 			<label>
-				<span class="label-text"></span>
 				<select>
-					<option>וידאו</option>
+					<option>מושן גרפיקס</option>
 					<option>אתר אינטרנט</option>
 					<option>אפליקציית מובייל</option>
 					<option>ספר</option>
@@ -52,7 +56,10 @@
 					<option>סדרת פוסטרים</option>
 					<option>סדרת אריזות</option>
 					<option>הצבה במרחב</option>
+					<option>וידאו-מאפינג</option>
+					<option>מערכת שילוט</option>
 				</select>
+				<span class="label-text"></span>
 			</label>
 		</section>
 		
@@ -68,11 +75,37 @@
 			    
 			    labelElement.querySelector( ".label-text" ).innerHTML = e.currentTarget.value;
 			    
+			    labelElement.dataset.locked = true;
+			    
+			} );
+		    
+	    } );
+	    
+	    var reset = () => {
+
+		    document.querySelectorAll( "label" ).forEach( labelElement => {
+			    
+			    if ( 'locked' in labelElement.dataset ) return;
+			    
+			    var selectElement = labelElement.querySelector( "select" );
+			    
+			    selectElement.selectedIndex = Math.floor( Math.random() * selectElement.length );
+			    
+			    labelElement.querySelector( ".label-text" ).innerHTML = selectElement.value;
+			    
 		    } );
 		    
-		    selectElement.selectedIndex = Math.floor( Math.random() * selectElement.length );
+	    }
+	    
+	    reset();
+	    
+	    window.addEventListener( "keyup", ( e ) => {
 		    
-		    labelElement.querySelector( ".label-text" ).innerHTML = selectElement.value;
+		    if ( 13 == e.keyCode ) {
+			    
+			    reset();
+			    
+		    }
 		    
 	    } );
 	    

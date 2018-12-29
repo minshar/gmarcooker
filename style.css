@@ -10,8 +10,17 @@ article section {
 	display: inline;
 }
 
+label {
+/* 	position: relative; */
+}
+
+label:hover select {
+	opacity: 1;
+}
+
 select {
-	display: none;
+	position: fixed;
+	opacity: 0;
 }
 
 .label-text {
