@@ -12,58 +12,38 @@
 	  
 	<article>
 		
-		<section class="application">
+		<section class="applications">
 			<span class="label">הפרויקט שלי יהיה</span>
 			<label>
 				<select>
-					<option>סיפור נראטיבי</option>
-					<option>סיפור אינטראקטיבי</option>
-					<option>כלי עזר</option>
-					<option>תדמית חזותית</option>
-					<option>קטלוג תערוכה</option>
-					<option>קמפיין</option>
-					<option>מניפסט חזותי</option>
 				</select>
 				<span class="label-text"></span>
 			</label>
 		</section>
 
-		<section class="technique">
+		<section class="techniques">
 			<span class="label">בטכניקה</span>
 			<label>
 				<select>
-					<option>איורית</option>
-					<option>טיפוגרפית</option>
-					<option>אינפוגרפית</option>
-					<option>ידנית בלבד</option>
-					<option>של שחור/לבן</option>
-					<option>מבוססת רדי-מייד</option>
-					<option>מבוססת קוד</option>
 				</select>
 				<span class="label-text"></span>
 			</label>
 		</section>
 
-		<section class="format">
+		<section class="formats">
 			<span class="label">בפורמט של</span>
 			<label>
 				<select>
-					<option>מושן גרפיקס</option>
-					<option>אתר אינטרנט</option>
-					<option>אפליקציית מובייל</option>
-					<option>ספר</option>
-					<option>סדרת חוברות</option>
-					<option>סדרת פוסטרים</option>
-					<option>סדרת אריזות</option>
-					<option>הצבה במרחב</option>
-					<option>וידאו-מאפינג</option>
-					<option>מערכת שילוט</option>
 				</select>
 				<span class="label-text"></span>
 			</label>
 		</section>
 		
 	</article>
+	
+	<aside>
+		
+	</aside>
     
 	<div class="refresh">
 		<button class="refresh-button" title="רענן (אפשר גם ללחוץ אנטר)">🔄</button>
@@ -71,6 +51,107 @@
 	
     <script type="text/javascript">
 	    
+	    if ( 'options' in localStorage ) {
+		    
+		    var options = JSON.parse( localStorage.options );
+		    
+	    } else {
+		    
+		    var options = {
+			    
+				applications: [ "סיפור נראטיבי", "סיפור אינטראקטיבי", "כלי עזר", "תדמית חזותית", "קטלוג תערוכה", "קמפיין", "מניפסט חזותי" ],
+	
+				techniques: [ "איורית", "טיפוגרפית", "אינפוגרפית", "ידנית בלבד", "של שחור/לבן", "מבוססת רדי-מייד", "מבוססת קוד" ],
+	
+				formats: [ "מושן גרפיקס", "אתר אינטרנט", "אפליקציית מובייל", "ספר", "מרצ׳נדייז", "סדרת חוברות", "סדרת פוסטרים", "סדרת אריזות", "הצבה במרחב", "וידאו-מאפינג", "מערכת שילוט" ]
+				
+			};
+			
+			localStorage.options = JSON.stringify( options );
+			
+	    }
+	    
+		
+		Object.keys( options ).forEach( ( key ) => {
+			
+			var sectionEl = document.createElement( "SECTION" );
+			
+			var inputEl = document.createElement( "INPUT" );
+			
+			var listElement = document.createElement( "UL" );
+			
+			options[ key ].forEach( ( option ) => {
+				
+				var itemElement = document.createElement( "LI" );
+				
+				itemElement.innerHTML = option;
+				
+				var removeButton = document.createElement( "BUTTON" );
+				
+				removeButton.innerHTML = "הסר";
+				
+				removeButton.addEventListener( "click", e => {
+					
+					options[ key ].splice( options[ key ].indexOf( option ), 1 );
+					
+					localStorage.options = JSON.stringify( options );
+					
+					itemElement.remove();
+					
+					document.querySelector( "article section." + key + " select option[value='" + option + "']" ).remove();
+										
+				} );
+				
+				itemElement.appendChild( removeButton );
+				
+				listElement.appendChild( itemElement );
+				
+				var optionEl = document.createElement( "OPTION" );
+				
+				optionEl.value = option;
+				
+				optionEl.innerHTML = option;
+				
+				document.querySelector( "article section." + key + " select" ).appendChild( optionEl );
+				
+			} );
+			
+			inputEl.addEventListener( "keyup", ( e ) => {
+				
+				if ( e.keyCode == 13 ) {
+					
+					e.preventDefault();
+					
+					options[ key ].push( inputEl.value );
+
+					localStorage.options = JSON.stringify( options );
+					
+					var itemElement = document.createElement( "LI" );
+					
+					itemElement.innerHTML = inputEl.value;
+					
+					listElement.appendChild( itemElement );
+	
+					var optionEl = document.createElement( "OPTION" );
+					
+					optionEl.innerHTML = inputEl.value;
+					
+					document.querySelector( "article section." + key + " select" ).appendChild( optionEl );
+					
+					inputEl.value = '';
+					
+				}
+				
+			} );
+			
+			sectionEl.appendChild( listElement );
+			
+			sectionEl.appendChild( inputEl );
+			
+			document.querySelector( "aside" ).appendChild( sectionEl );
+	    
+		} );
+		
 	    document.querySelectorAll( "label" ).forEach( labelElement => {
 		    
 		    var selectElement = labelElement.querySelector( "select" );
@@ -111,6 +192,12 @@
 			    
 			    refresh();
 			    
+		    }
+		    
+		    if ( e.ctrlKey && ( 83 == e.keyCode ) ) {
+			    
+			    document.body.className = ( document.body.className ) ? "" : "settings-active";
+
 		    }
 		    
 	    } );
