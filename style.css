@@ -26,3 +26,22 @@ select {
 .label-text {
 	font-weight: bold;
 }
+
+.refresh {
+	position: fixed;
+	bottom: 1em;
+	left: 0; right: 0;
+	text-align: center;
+}
+
+.refresh button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 2em;
+	outline: none;
+}
+
+[data-locked=true] .label-text {
+	font-weight: normal;
+}

@@ -65,6 +65,10 @@
 		
 	</article>
     
+	<div class="refresh">
+		<button class="refresh-button" title="רענן (אפשר גם ללחוץ אנטר)">🔄</button>
+	</div>
+	
     <script type="text/javascript">
 	    
 	    document.querySelectorAll( "label" ).forEach( labelElement => {
@@ -81,7 +85,7 @@
 		    
 	    } );
 	    
-	    var reset = () => {
+	    var refresh = () => {
 
 		    document.querySelectorAll( "label" ).forEach( labelElement => {
 			    
@@ -97,17 +101,21 @@
 		    
 	    }
 	    
-	    reset();
+	    refresh();
 	    
 	    window.addEventListener( "keyup", ( e ) => {
 		    
+		    if ( e.target.className == "refresh-button" ) return;
+		    
 		    if ( 13 == e.keyCode ) {
 			    
-			    reset();
+			    refresh();
 			    
 		    }
 		    
 	    } );
+	    
+	    document.querySelector( ".refresh-button" ).addEventListener( "click", e => refresh() );
 	    
 	</script>
 
