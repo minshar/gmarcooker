@@ -194,13 +194,13 @@
 			    
 		    }
 
-		    if ( e.ctrlKey && ( 82 == e.keyCode ) ) { // ^R - reset local storage
+		    if ( e.altKey && ( 82 == e.keyCode ) ) { // Alt+R - reset local storage
 			    
 			    localStorage.clear();
 
 		    }
 		    
-		    if ( e.ctrlKey && ( 83 == e.keyCode ) ) { // ^S - toggle settings
+		    if ( e.altKey && ( 83 == e.keyCode ) ) { // Alt+S - toggle settings
 			    
 			    document.body.className = ( document.body.className ) ? "" : "settings-active";
 
