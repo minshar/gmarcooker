@@ -3,6 +3,13 @@ body, input, select {
 	line-height: 1.4;	
 }
 
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	outline: none;
+}
+
 article {
 	max-width: 640px;
 	margin: 1em auto;
@@ -14,7 +21,8 @@ article section {
 }
 
 label {
-/* 	position: relative; */
+	position: relative;
+	white-space: nowrap;
 }
 
 label:hover select {
@@ -22,7 +30,7 @@ label:hover select {
 }
 
 select {
-	position: fixed;
+	position: absolute;
 	opacity: 0;
 }
 
@@ -71,7 +79,9 @@ aside ul li button {
 }
 
 aside ul li:hover button {
-	display: inline;
+	display: inline-block;
+	font-size: 0.8em;
+	margin-inline-end: .25em;
 }
 
 .label-text {
@@ -86,13 +96,27 @@ aside ul li:hover button {
 }
 
 .refresh button {
-	background: none;
-	border: none;
-	cursor: pointer;
 	font-size: 2em;
-	outline: none;
 }
 
 [data-locked=true] .label-text {
 	font-weight: normal;
+}
+
+.settings-button {
+	position: absolute;
+	top: 20px; left: 20px;
+	font-size: 2em;
+}
+
+.settings-button:before {
+	content: "🧠";
+}
+
+body.settings-active .settings-button:before {
+	content: "⬇️";
+}
+
+body.alt-down .settings-button:before {
+	content: "💣";
 }
